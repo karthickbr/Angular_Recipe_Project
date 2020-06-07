@@ -24,12 +24,23 @@ export class RecipeService {
     'https://i.ytimg.com/vi/vXBzaDQTzgs/maxresdefault.jpg', [
       new Ingredient('Buns', 2),
       new Ingredient('Meat', 1)
-    ])
+    ]),
+
+    new Recipe('A Tasty Recipe',
+     'This is simply a test',
+     'https://www.spendwithpennies.com/wp-content/uploads/2013/10/Crispy-Oven-Fries-SpendWithPennies-27-500x375.jpg', [
+       new Ingredient('Meat', 1),
+       new Ingredient('French Fries', 20)
+     ]),
   ];
 
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipe(index: number) {
+    return this.recipes[index];
   }
 
   addIngredianceToShoppingList(ingredient: Ingredient[]) {
