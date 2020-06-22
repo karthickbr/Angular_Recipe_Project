@@ -7,10 +7,9 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class RecipeService {
+     recipeChanged = new Subject<Recipe[]>();
 
-  constructor(private shoppingListService: ShoppingListService) { }
-
-    private recipes: Recipe[] = [
+  private recipes: Recipe[] = [
     new Recipe('A Test Recipe',
      'This is simply a test',
      'https://www.spendwithpennies.com/wp-content/uploads/2013/10/Crispy-Oven-Fries-SpendWithPennies-27-500x375.jpg', [
@@ -41,7 +40,7 @@ export class RecipeService {
        new Ingredient('French Fries', 20)
      ]),
   ];
-
+  constructor(private shoppingListService: ShoppingListService) { }
 
   getRecipes() {
     return this.recipes.slice();
@@ -52,6 +51,23 @@ export class RecipeService {
   }
 
   addIngredianceToShoppingList(ingredient: Ingredient[]) {
-      this.shoppingListService.addIngredient(ingredient);
+    this.shoppingListService.addIngredient(ingredient);
   }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+   this.recipes.splice(index, 1);
+   this.recipeChanged.next(this.recipes.slice());
+  }
+
+
 }
